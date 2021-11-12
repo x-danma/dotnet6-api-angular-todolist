@@ -1,4 +1,4 @@
-name: .NET
+name: .NEt API
 
 on:
   push:
@@ -16,16 +16,10 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.x
+        dotnet-version: 6.0.x
     - name: Restore dependencies Web
       run: dotnet restore ./TodoWeb/TodoWeb.csproj
     - name: Build Web
       run: dotnet build ./TodoWeb/TodoWeb.csproj --no-restore
     - name: Test Web
       run: dotnet test ./TodoWeb/TodoWeb.csproj --no-build --verbosity normal
-    - name: Restore dependencies Api
-      run: dotnet restore ./TodoApi/TodoApi.csproj
-    - name: Build Api
-      run: dotnet build ./TodoApi/TodoApi.csproj --no-restore
-    - name: Test Api
-      run: dotnet test ./TodoApi/TodoApi.csproj --no-build --verbosity normal
