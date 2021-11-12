@@ -1,2 +1,10 @@
 <p>todo works!</p>
-<h1>{{message}}</h1>
+
+<div class="card" *ngFor="let todo of todos">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item" >
+            {{todo.name}}}
+            <input class="form-check-input me-1 float-end" type="checkbox" value="todo.isComplete" aria-label="...">
+        </li>
+    </ul>
+</div>

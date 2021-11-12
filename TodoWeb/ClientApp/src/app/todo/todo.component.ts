@@ -9,11 +9,11 @@ import { ApiPaths } from 'src/environments/environment';
 })
 export class TodoComponent implements OnInit {
 
-    public message: string = '';
+    public todos: Todo[] = [];
 
     constructor(http: HttpClient) {
-        http.get<string>(ApiPaths.ApiBaseUrl).subscribe(result => {
-            this.message = result;
+        http.get<Todo[]>(ApiPaths.ApiBaseUrl + 'todoitems').subscribe(result => {
+            this.todos = result;
         }, error => console.error(error));
     }
     ngOnInit(): void {
@@ -21,9 +21,8 @@ export class TodoComponent implements OnInit {
 }
 
 
-interface WeatherForecast {
-    date: string;
-    temperatureC: number;
-    temperatureF: number;
-    summary: string;
+export interface Todo {
+    id: number;
+    name: string;
+    isComplete: boolean;
 }
