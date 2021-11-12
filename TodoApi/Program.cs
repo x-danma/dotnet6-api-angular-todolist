@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-var  TodoApiAllowSpecificOrigins = "_todoApiAllowSpecificOrigins";
+var TodoApiAllowSpecificOrigins = "_todoApiAllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TodoDb>(opt => opt.UseInMemoryDatabase("TodoList"));
@@ -16,7 +16,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: TodoApiAllowSpecificOrigins,
                       corsBuilder =>
                       {
-                          corsBuilder.WithOrigins(builder.Configuration.GetValue<string>("AllowedCors"));
+                          corsBuilder.WithOrigins(builder.Configuration.GetValue<string>("AllowedCors"))
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                        
                       });
 });
 

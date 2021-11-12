@@ -2,9 +2,24 @@
 
 <div class="card" *ngFor="let todo of todos">
     <ul class="list-group list-group-flush">
-        <li class="list-group-item" >
-            {{todo.name}}}
-            <input class="form-check-input me-1 float-end" type="checkbox" value="todo.isComplete" aria-label="...">
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-8">
+
+                    <input type="text" class="form-control-plaintext col-2" id="todo.id" [value]="todo.name"
+                        [(ngModel)]="todo.name" (blur)="saveTodo(todo)">
+                </div>
+                <div class="col-4">
+                    <input type="checkbox" class="btn-check" [id]="'complete'+todo.id" [(ngModel)]="todo.isComplete"
+                        (change)="saveTodo(todo)" aria-label="..." autocomplete="off">
+                    <label class="btn btn-outline-success" [for]="'complete'+todo.id">Completed</label>
+                    
+                    <input type="checkbox" class="btn-check" [id]="'delete'+todo.id"
+                        (change)="deleteTodo(todo)" aria-label="..." >
+                    <label class="btn btn-outline-danger" [for]="'delete'+todo.id">Delete</label>
+                </div>
+
+            </div>
         </li>
     </ul>
 </div>
