@@ -1,4 +1,4 @@
-name: .NEt API
+name: .NET API
 
 on:
   push:
