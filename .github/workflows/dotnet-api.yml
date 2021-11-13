@@ -23,6 +23,15 @@ jobs:
       run: dotnet build ./TodoWeb/TodoWeb.csproj --no-restore
     - name: Test Web
       run: dotnet test ./TodoWeb/TodoWeb.csproj --no-build --verbosity normal
+    - name: Azure Login
+      uses: Azure/login@v1.4.0
+      with:
+        # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
+        creds: ${{ AZURE_CREDENTIALS }}
+        # TenantId of the Azure Service principal created.
+        tenant-id: ${{ AZURE_MPN_TENANTID }}
+        # Azure subscriptionId
+        subscription-id: ${{ AZURE_MPN_SUBSCRIPTIONID }}
     - name: Azure WebApp Api Deploy
       uses: Azure/webapps-deploy@v2
       with:
@@ -30,3 +39,4 @@ jobs:
         app-name: dotnet6-api-angular-todolist-api
         # Enter the start up command. For ex. dotnet run or dotnet run
         startup-command: dotnet run
+    
