@@ -13,13 +13,18 @@
                     <input type="checkbox" class="btn-check" [id]="'complete'+todo.id" [(ngModel)]="todo.isComplete"
                         (change)="saveTodo(todo)" aria-label="..." autocomplete="off">
                     <label class="btn btn-outline-success" [for]="'complete'+todo.id">Completed</label>
-                    
-                    <input type="checkbox" class="btn-check" [id]="'delete'+todo.id"
-                        (change)="deleteTodo(todo)" aria-label="..." >
+
+                    <input type="checkbox" class="btn-check" [id]="'delete'+todo.id" (change)="deleteTodo(todo)"
+                        aria-label="...">
                     <label class="btn btn-outline-danger" [for]="'delete'+todo.id">Delete</label>
                 </div>
 
             </div>
         </li>
     </ul>
+</div>
+<div class="row">
+    <div class="col-4 flex-column-reverse">
+        <button type="button" class="btn btn-primary" (click)="createTodo()">New Todo</button>
+    </div>
 </div>
