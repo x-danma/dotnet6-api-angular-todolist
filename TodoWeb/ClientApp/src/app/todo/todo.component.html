@@ -9,7 +9,7 @@
                     <input type="text" class="form-control-plaintext col-2" id="todo.id" [value]="todo.name"
                         [(ngModel)]="todo.name" (blur)="saveTodo(todo)">
                 </div>
-                <div class="col-4">
+                <div class="col-4 flex-column-reverse">
                     <input type="checkbox" class="btn-check" [id]="'complete'+todo.id" [(ngModel)]="todo.isComplete"
                         (change)="saveTodo(todo)" aria-label="..." autocomplete="off">
                     <label class="btn btn-outline-success" [for]="'complete'+todo.id">Completed</label>

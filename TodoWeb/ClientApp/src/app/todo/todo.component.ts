@@ -1,4 +1,5 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_compiler';
 import { Component, OnInit } from '@angular/core';
 import { ApiPaths } from 'src/environments/environment';
 
@@ -25,13 +26,16 @@ export class TodoComponent implements OnInit {
         this.httpClient.put<any>(ApiPaths.ApiBaseUrl + 'todoitems/' + todo.id, {
             id: todo.id,
             name: todo.name,
-            isComplete:todo.isComplete
+            isComplete: todo.isComplete
         }).subscribe(result => {
         }, error => console.error(error));
     }
 
     deleteTodo(todo: Todo): void {
-        this.httpClient.delete<any>(ApiPaths.ApiBaseUrl + 'todoitems/' + todo.id).subscribe(result => {
+        this.httpClient.delete<Todo>(ApiPaths.ApiBaseUrl + 'todoitems/' + todo.id).subscribe(result => {
+            this.todos.forEach((element, index) => {
+                if(element.id === result.id) this.todos.splice(index, 1);
+            })
         }, error => console.error(error));
     }
 }
