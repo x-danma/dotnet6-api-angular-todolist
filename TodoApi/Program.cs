@@ -19,7 +19,7 @@ builder.Services.AddCors(options =>
                           corsBuilder.WithOrigins(builder.Configuration.GetValue<string>("AllowedCors"))
                           .AllowAnyHeader()
                           .AllowAnyMethod();
-                        
+
                       });
 });
 
@@ -29,25 +29,31 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+        options.RoutePrefix = string.Empty;
+    });
 }
 
 app.UseCors(TodoApiAllowSpecificOrigins);
 app.UseHttpsRedirection();
 
-app.MapGet("/", () => "Hello World!");
-
 app.MapGet("/todoitems", async (TodoDb db) =>
-    await db.Todos.ToListAsync());
+    await db.Todos.ToListAsync())
+    .Produces<Todo[]>();
 
 app.MapGet("/todoitems/complete", async (TodoDb db) =>
-    await db.Todos.Where(t => t.IsComplete).ToListAsync());
+    await db.Todos.Where(t => t.IsComplete).ToListAsync())
+    .Produces<Todo[]>();
 
 app.MapGet("/todoitems/{id}", async (int id, TodoDb db) =>
     await db.Todos.FindAsync(id)
         is Todo todo
             ? Results.Ok(todo)
-            : Results.NotFound());
+            : Results.NotFound())
+    .Produces<Todo>()
+    .Produces(StatusCodes.Status404NotFound);
 
 app.MapPost("/todoitems", async (Todo todo, TodoDb db) =>
 {
@@ -55,7 +61,8 @@ app.MapPost("/todoitems", async (Todo todo, TodoDb db) =>
     await db.SaveChangesAsync();
 
     return Results.Created($"/todoitems/{todo.Id}", todo);
-});
+})
+    .Produces<Todo>(StatusCodes.Status201Created);
 
 app.MapPut("/todoitems/{id}", async (int id, Todo inputTodo, TodoDb db) =>
 {
@@ -69,7 +76,9 @@ app.MapPut("/todoitems/{id}", async (int id, Todo inputTodo, TodoDb db) =>
     await db.SaveChangesAsync();
 
     return Results.NoContent();
-});
+})
+    .Produces(StatusCodes.Status204NoContent)
+    .Produces(StatusCodes.Status404NotFound);
 
 app.MapDelete("/todoitems/{id}", async (int id, TodoDb db) =>
 {
@@ -81,7 +90,9 @@ app.MapDelete("/todoitems/{id}", async (int id, TodoDb db) =>
     }
 
     return Results.NotFound();
-});
+})
+    .Produces<Todo>(StatusCodes.Status200OK)
+    .Produces(StatusCodes.Status404NotFound);
 
 
 app.Run();
