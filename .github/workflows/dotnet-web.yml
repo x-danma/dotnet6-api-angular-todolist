@@ -2,6 +2,7 @@ name: .NET Web
 
 on:
   push:
+    paths: ['TodoApi/*', 'dotnet-web.yml']
     branches: [ main ]
   pull_request:
     branches: [ main ]
