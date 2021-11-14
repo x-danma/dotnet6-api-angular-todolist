@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'TodoApi/**'
-      - 'dotnet-api.yml'
+      - '**dotnet-api.yml'
     branches: [ main ]
   pull_request:
     branches: [ main ]
