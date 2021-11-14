@@ -25,10 +25,10 @@ import { TodoComponent } from './todo/todo.component';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: TodoComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'todo', component: TodoComponent },
+      { path: 'home', component: HomeComponent },
     ])
   ],
   providers: [],
