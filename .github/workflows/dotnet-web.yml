@@ -2,7 +2,9 @@ name: .NET Web
 
 on:
   push:
-    paths: ['TodoWeb/*', 'dotnet-web.yml']
+    paths: 
+      - 'TodoWeb/**'
+      - 'dotnet-web.yml'
     branches: [ main ]
   pull_request:
     branches: [ main ]
