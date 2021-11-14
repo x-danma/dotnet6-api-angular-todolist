@@ -4,7 +4,7 @@ on:
   push:
     paths: 
       - 'TodoWeb/**'
-      - 'dotnet-web.yml'
+      - '**dotnet-web.yml'
     branches: [ main ]
   pull_request:
     branches: [ main ]
