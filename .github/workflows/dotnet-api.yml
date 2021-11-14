@@ -2,6 +2,9 @@ name: .NET API
 
 on:
   push:
+    paths:
+      - 'TodoApi/**'
+      - '**dotnet-api.yml'
     branches: [ main ]
   pull_request:
     branches: [ main ]
@@ -30,7 +33,7 @@ jobs:
     - name: Test Web
       run: dotnet test ./TodoApi/TodoApi.csproj --no-build --verbosity normal
     # Deploy to Azure Web apps
-    - name: 'Run Azure webapp deploy action using publish profile credentials'
+    - name: 'Deploy to Azure'
       uses: azure/webapps-deploy@v2
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
