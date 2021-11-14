@@ -2,6 +2,7 @@ name: .NET API
 
 on:
   push:
+    paths: ['TodoApi/*', 'dotnet-api.yml']
     branches: [ main ]
   pull_request:
     branches: [ main ]
