@@ -9,6 +9,9 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  APP_PACKAGE_LOCATION: api
+
 jobs:
   build:
     runs-on: windows-latest
@@ -23,16 +26,16 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build ./TodoApi/TodoApi.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish ./TodoApi/TodoApi.csproj -c Release -o ${{env.DOTNET_ROOT}}/{{env.APP_PACKAGE_LOCATION}}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          name: .net-api
+          path: ${{env.DOTNET_ROOT}}/{{env.APP_PACKAGE_LOCATION}}
 
   deploy:
     runs-on: windows-latest
@@ -45,7 +48,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
-          name: .net-app
+          name: .net-api
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
