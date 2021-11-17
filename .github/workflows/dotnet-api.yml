@@ -32,7 +32,6 @@ jobs:
       run: dotnet publish ./TodoApi/TodoApi.csproj -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp' 
     - name: Test Web
       run: dotnet test ./TodoApi/TodoApi.csproj --no-build --verbosity normal
-    # Deploy to Azure Web apps
     - name: 'Deploy to Azure'
       uses: azure/webapps-deploy@v2
       with: 
