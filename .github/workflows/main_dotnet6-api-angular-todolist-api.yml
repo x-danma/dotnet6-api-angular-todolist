@@ -29,13 +29,13 @@ jobs:
         run: dotnet build ./TodoApi/TodoApi.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish ./TodoApi/TodoApi.csproj -c Release -o ${{env.DOTNET_ROOT}}/{{env.APP_PACKAGE_LOCATION}}
+        run: dotnet publish ./TodoApi/TodoApi.csproj -c Release -o ${{env.DOTNET_ROOT}}/${{env.APP_PACKAGE_LOCATION}}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: .net-api
-          path: ${{env.DOTNET_ROOT}}/{{env.APP_PACKAGE_LOCATION}}
+          path: ${{env.DOTNET_ROOT}}/${{env.APP_PACKAGE_LOCATION}}
 
   deploy:
     runs-on: windows-latest
