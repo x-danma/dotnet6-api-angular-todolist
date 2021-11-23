@@ -14,8 +14,8 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
-      - name: Substitute Appsettings
       - uses: microsoft/variable-substitution@v1
+      - name: Substitute Appsettings
         with:
           files: 'TodoApi\appsettings.json'
         env:
