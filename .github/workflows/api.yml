@@ -2,7 +2,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: api
+name: api 
 
 on:
   push:
@@ -23,6 +23,8 @@ jobs:
       - run: echo "github.run_attempt ${{github.run_attemp}}"
       - run: echo "github.sha ${{github.sha}}"
       - run: echo "GitHub Context ${{github.sha}}"
+      - run: echo $(echo ${{github.event.commits[0].timestamp}})
+      - run: echo $(echo ${{github.event.commits[0].timestamp}} | cut -d "T" -f1)
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
@@ -54,7 +56,10 @@ jobs:
           files: './TodoApi/appsettings.json'
         env:
           AllowedCors: https://purple-cliff-0e2c19103.azurestaticapps.net/
-      
+          VersionInfo.RunNumber: ${{github.run_number}}
+          VersionInfo.SHA: ${{github.sha}}
+          VersionInfo.TimeStamp: ${{github.run_number}}
+
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v1
         with:
