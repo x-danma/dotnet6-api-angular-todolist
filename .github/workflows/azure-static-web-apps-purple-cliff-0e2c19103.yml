@@ -15,6 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
+      - name:  Substitute Appsettings
+      - uses: microsoft/variable-substitution@v1
+        with:
+          files: 'TodoApi\appsettings.json'
+        env:
+          AllowedCors: https://purple-cliff-0e2c19103.azurestaticapps.net/
+      - name: CheckOut
       - uses: actions/checkout@v2
         with:
           submodules: true
