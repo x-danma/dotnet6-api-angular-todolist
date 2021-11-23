@@ -11,6 +11,15 @@ on:
   workflow_dispatch:
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Substitute Appsettings
+      - uses: microsoft/variable-substitution@v1
+        with:
+          files: 'TodoApi\appsettings.json'
+        env:
+          AllowedCors: https://purple-cliff-0e2c19103.azurestaticapps.net/
   build:
     runs-on: ubuntu-latest
 
