@@ -116,7 +116,7 @@ class VersionConfig
     public const string VersionInfo = "VersionInfo";
     public string? RunNumber { get; set; }
     public string? SHA { get; set; }
-    public string? Timestamp { get; set; }
+    public string? TimeStamp { get; set; }
     public string? WorkFlow { get; set; }
 
 }
