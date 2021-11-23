@@ -31,6 +31,13 @@ app.UseSwaggerUI();
 app.UseCors(TodoApiAllowSpecificOrigins);
 app.UseHttpsRedirection();
 
+app.MapGet("/version", () =>
+{
+    var versionConfig = new VersionConfig();
+    builder.Configuration.GetSection(VersionConfig.VersionInfo).Bind(versionConfig);
+    return Results.Ok(versionConfig);
+});
+
 app.MapGet("/todoitems", async (TodoDb db) =>
     await db.Todos.ToListAsync())
     .Produces<Todo[]>();
@@ -102,4 +109,14 @@ class TodoDb : DbContext
         : base(options) { }
 
     public DbSet<Todo> Todos => Set<Todo>();
+}
+
+class VersionConfig
+{
+    public const string VersionInfo = "VersionInfo";
+    public string? RunNumber { get; set; }
+    public string? SHA { get; set; }
+    public string? Timestamp { get; set; }
+    public string? WorkFlow { get; set; }
+
 }
