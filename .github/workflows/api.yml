@@ -23,7 +23,7 @@ jobs:
         with:
           files: './TodoApi/appsettings.json'
         env:
-          AllowedCors: https://purple-cliff-0e2c19103.azurestaticapps.net/
+          AllowedCors: https://purple-cliff-0e2c19103.azurestaticapps.net
           VersionInfo.RunNumber: ${{github.run_number}}
           VersionInfo.SHA: ${{github.sha}}
           VersionInfo.TimeStamp: ${{github.event.head_commit.timestamp}}
