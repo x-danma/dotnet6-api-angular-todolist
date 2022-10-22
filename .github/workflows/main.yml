@@ -1,19 +1,18 @@
 on: [push]
 
 jobs:
-  hello_world_job:
+  autoBump_tag:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: A job to increment tag
     steps:
-      - name: Hello world action step
-        id: hello
-        uses: x-danma/hello-world-javascript-action@1.0.11
+      - name: Increment SemVer Patch Version and Tag
+        id: createTag
+        uses: x-danma/increment-semver-patch-and-tag-action@1
         with:
-          who-to-greet: 'Mona the Octocat'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           repositoryName: ${{ github.event.repository.name }}
           sha: ${{ github.sha }}
           repositoryOwner: ${{ github.repository_owner }}
-      # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
+      # Use the output from the `createTag` step
+      - name: Get the output tag
+        run: echo "The new tag was ${{ steps.createTag.outputs.newTag }}"
