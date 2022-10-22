@@ -7,11 +7,12 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: x-danma/hello-world-javascript-action@0.0.13
+        uses: x-danma/hello-world-javascript-action@0.0.14
         with:
           who-to-greet: 'Mona the Octocat'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           repositoryName: ${{ github.event.repository.name }}
+          sha: ${{ github.sha }}
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
