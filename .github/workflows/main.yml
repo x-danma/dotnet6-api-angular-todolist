@@ -10,6 +10,7 @@ jobs:
         uses: x-danma/hello-world-javascript-action@1.0.3
         with:
           who-to-greet: 'Mona the Octocat'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
