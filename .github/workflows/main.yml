@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: Hello world action step
         id: hello
-        uses: x-danma/hello-world-javascript-action@1.0.4
+        uses: x-danma/hello-world-javascript-action@1.0.5
         with:
           who-to-greet: 'Mona the Octocat'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
