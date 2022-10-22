@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: Increment SemVer Patch Version and Tag
         id: createTag
-        uses: x-danma/increment-semver-patch-and-tag-action@1
+        uses: x-danma/increment-semver-patch-and-tag-action@1.2.0
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           repositoryName: ${{ github.event.repository.name }}
