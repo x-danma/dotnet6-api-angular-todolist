@@ -13,6 +13,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           repositoryName: ${{ github.event.repository.name }}
           sha: ${{ github.sha }}
+          repositoryOwner: ${{ github.repository_owner }}
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
