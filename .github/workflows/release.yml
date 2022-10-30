@@ -1,0 +1,57 @@
+on:
+  release
+
+jobs:
+  test1:
+    runs-on: windows-latest
+    name: test1
+    steps:
+      - run: echo '${{ toJSON(github) }}'
+        
+
+  test2:
+    runs-on: windows-latest
+    name: test2
+    steps:
+      - uses: actions/checkout@v3
+      - id: foo
+        uses: x-danma/hello-world-composite-action@1.0.3
+        with:
+          who-to-greet: 'test1'
+      - run: echo random-number ${{ steps.foo.outputs.random-number }}
+        shell: bash
+
+  test3:
+    runs-on: windows-latest
+    name: test3
+    steps:
+      - uses: actions/checkout@v3
+      - id: foo
+        uses: x-danma/hello-world-composite-action@1.0.3
+        with:
+          who-to-greet: 'Mona the Octocat'
+      - run: echo random-number ${{ steps.foo.outputs.random-number }}
+        shell: bash
+
+  # autoBump_tag:
+  #   needs: [test1, test2, test3]
+  #   name: create new tag
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     tag: ${{ steps.createTag.outputs.newTag }}
+  #   steps:
+  #     # To use this repository's private action,
+  #     # you must check out the repository
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #     - name: Increment SemVer Patch Version and Tag
+  #       uses: ./ # Uses an action in the root directory
+  #       id: createTag
+  #       with:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         repositoryName: ${{ github.event.repository.name }}
+  #         sha: ${{ github.sha }}
+  #         repositoryOwner: ${{ github.repository_owner }}
+  #     # Use the output from the `createTag` step
+  #     - name: Get the output tag
+  #       run: echo "The tag was ${{ steps.createTag.outputs.newTag }}"

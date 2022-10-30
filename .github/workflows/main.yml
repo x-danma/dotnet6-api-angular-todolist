@@ -1,6 +1,12 @@
 on: [push]
 
 jobs:
+  test1:
+    runs-on: windows-latest
+    name: test1
+    steps:
+      - run: echo '${{ toJSON(github) }}'
+
   autoBump_tag:
     runs-on: ubuntu-latest
     name: A job to increment tag
