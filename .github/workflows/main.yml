@@ -21,7 +21,7 @@ jobs:
         run: echo '${{ github.event_name == 'push' && github.run_attempt == '1' }}'
       
       - name: check If tag should not be created
-        run: echo '${{ github.event_name == 'push' && github.run_attempt == '1' }}'
+        run: echo '${{ !(github.event_name == 'push' && github.run_attempt == '1') }}'
       - name: Increment SemVer Patch Version and Tag
         if: ${{ github.event_name == 'push' && github.run_attempt == '1' }}
         id: createTag
@@ -39,7 +39,7 @@ jobs:
         if: ${{ !(github.event_name == 'push' && github.run_attempt == '1') }}
         run: echo "The new tag was ${{ steps.createTag.outputs.newTag }}"
       - name: Get the generated output tag
-        if: ${{ !(github.event_name == 'push' && github.run_attempt == '1') }}
+        if: ${{ (github.event_name == 'push' && github.run_attempt == '1') }}
         run: echo "newTag=${{ steps.createTag.outputs.newTag }}" >> $GITHUB_OUTPUT
   
   deploy:
@@ -47,4 +47,4 @@ jobs:
     runs-on: windows-latest
     name: test1
     steps:
-      - run: echo 'deploying...'
+      - run: echo 'deploying version ${{needs.autoBump_tag.outputs.newTag}}...'
