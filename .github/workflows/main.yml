@@ -1,13 +1,20 @@
-on: [push]
+on:
+  push:
+    branches:
+        - 'main'
+  release:
+    types: [published]
 
 jobs:
+
   test1:
-    runs-on: windows-latest
-    name: test1
-    steps:
-      - run: echo '${{ toJSON(github) }}'
+      runs-on: windows-latest
+      name: test1
+      steps:
+        - run: echo '${{ toJSON(github) }}'
 
   autoBump_tag:
+    if: ${{ github.event_name == 'push' && github.run_attempt == '1' }}
     runs-on: ubuntu-latest
     name: A job to increment tag
     steps:
@@ -22,3 +29,10 @@ jobs:
       # Use the output from the `createTag` step
       - name: Get the output tag
         run: echo "The new tag was ${{ steps.createTag.outputs.newTag }}"
+  
+  deploy:
+    needs: autoBump_tag
+    runs-on: windows-latest
+    name: test1
+    steps:
+      - run: echo 'deploying...'
