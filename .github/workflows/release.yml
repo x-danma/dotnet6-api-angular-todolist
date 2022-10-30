@@ -12,6 +12,7 @@ jobs:
         
 
   test2:
+    if: ${{ github.event_name == 'release'}}
     runs-on: windows-latest
     name: test2
     steps:
