@@ -14,11 +14,16 @@ jobs:
         - run: echo '${{ toJSON(github) }}'
 
   autoBump_tag:
-    if: ${{ github.event_name == 'push' && github.run_attempt == '1' }}
     runs-on: ubuntu-latest
     name: A job to increment tag
     steps:
+      - name: check If tag should be created
+        run: echo '${{ github.event_name == 'push' && github.run_attempt == '1' }}'
+      
+      - name: check If tag should not be created
+        run: echo '${{ github.event_name == 'push' && github.run_attempt == '1' }}'
       - name: Increment SemVer Patch Version and Tag
+        if: ${{ github.event_name == 'push' && github.run_attempt == '1' }}
         id: createTag
         uses: x-danma/increment-semver-patch-and-tag-action@1.2.0
         with:
@@ -26,9 +31,16 @@ jobs:
           repositoryName: ${{ github.event.repository.name }}
           sha: ${{ github.sha }}
           repositoryOwner: ${{ github.repository_owner }}
+      - name: Use Release Tag
+        if: ${{ github.event_name == 'push' && github.run_attempt == '1' }}
+        run: echo "newTag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
       # Use the output from the `createTag` step
-      - name: Get the output tag
+      - name: Get the generated output tag
+        if: ${{ !(github.event_name == 'push' && github.run_attempt == '1') }}
         run: echo "The new tag was ${{ steps.createTag.outputs.newTag }}"
+      - name: Get the generated output tag
+        if: ${{ !(github.event_name == 'push' && github.run_attempt == '1') }}
+        run: echo "newTag=${{ steps.createTag.outputs.newTag }}" >> $GITHUB_OUTPUT
   
   deploy:
     needs: autoBump_tag
