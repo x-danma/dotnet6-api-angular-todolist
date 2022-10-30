@@ -22,6 +22,7 @@ jobs:
       
       - name: check If tag should not be created
         run: echo '${{ !(github.event_name == 'push' && github.run_attempt == '1') }}'
+      
       - name: Increment SemVer Patch Version and Tag
         if: ${{ github.event_name == 'push' && github.run_attempt == '1' }}
         id: createTag
@@ -31,15 +32,14 @@ jobs:
           repositoryName: ${{ github.event.repository.name }}
           sha: ${{ github.sha }}
           repositoryOwner: ${{ github.repository_owner }}
+      
       - name: Use Release Tag
         if: ${{ !(github.event_name == 'push' && github.run_attempt == '1') }}
         run: echo "newTag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
       # Use the output from the `createTag` step
-      - name: Get the generated output tag
-        if: ${{ !(github.event_name == 'push' && github.run_attempt == '1') }}
-        run: echo "The new tag was ${{ steps.createTag.outputs.newTag }}"
-      - name: Get the generated output tag
-        if: ${{ (github.event_name == 'push' && github.run_attempt == '1') }}
+      
+      - name: Use the generated output tag
+        if: ${{ github.event_name == 'push' && github.run_attempt == '1' }}
         run: echo "newTag=${{ steps.createTag.outputs.newTag }}" >> $GITHUB_OUTPUT
   
   deploy:
