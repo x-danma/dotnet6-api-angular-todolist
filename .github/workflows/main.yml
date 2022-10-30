@@ -16,6 +16,8 @@ jobs:
   autoBump_tag:
     runs-on: ubuntu-latest
     name: A job to increment tag
+    outputs:
+      tag: ${{ env.newTag }}
     steps:
       - name: check If tag should be created
         run: echo '${{ github.event_name == 'push' && github.run_attempt == '1' }}'
@@ -45,6 +47,6 @@ jobs:
   deploy:
     needs: autoBump_tag
     runs-on: windows-latest
-    name: test1
+    name: deploy ${{needs.autoBump_tag.outputs.newTag}}
     steps:
       - run: echo 'deploying version ${{needs.autoBump_tag.outputs.newTag}}...'
