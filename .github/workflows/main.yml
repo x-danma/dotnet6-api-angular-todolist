@@ -32,7 +32,7 @@ jobs:
           sha: ${{ github.sha }}
           repositoryOwner: ${{ github.repository_owner }}
       - name: Use Release Tag
-        if: ${{ github.event_name == 'push' && github.run_attempt == '1' }}
+        if: ${{ !(github.event_name == 'push' && github.run_attempt == '1') }}
         run: echo "newTag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
       # Use the output from the `createTag` step
       - name: Get the generated output tag
