@@ -12,7 +12,7 @@ jobs:
         
 
   test2:
-    if: ${{ github.event_name == 'release' || github.run_attempt == '1' }}
+    if: ${{ github.event_name != 'release' || github.run_attempt == '1' }}
     runs-on: windows-latest
     name: test2
     steps:
